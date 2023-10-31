@@ -22,7 +22,7 @@ const Tramites = () => {
     });
 
   };
-
+  console.log(selectedItem)
   const { msg } = alerta;
 
   return (

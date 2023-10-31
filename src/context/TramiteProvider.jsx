@@ -617,9 +617,11 @@ const TramiteProvider = ({ children }) => {
       const response = await axiosClient.post(`/pdf/${_id}`, {
         withCredentials: true,
       });
+      console.log(response)
       return { msg: response.data.message, error: false };
       // console.log(response.data.message);
     } catch (error) {
+      console.log(error)
       return { msg: error.response.data.error, error: true };
       // console.log(error.response.data.error);
     }
