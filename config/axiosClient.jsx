@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosClient = axios.create(
     {
-        baseURL: "https://seal-app-y62qh.ondigitalocean.app/api"
+        baseURL: "https://plankton-app-wit7e.ondigitalocean.app/api"
     }
 );
 
