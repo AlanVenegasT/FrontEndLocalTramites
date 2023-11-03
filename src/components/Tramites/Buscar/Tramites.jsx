@@ -13,9 +13,9 @@ const Tramites = () => {
 
   const handleDescargarTramite = async () => {
     setAlerta({})
-    const { msg, error } = await descargarTramite(selectedItem._id);
+    const {url, msg, error } = await descargarTramite(selectedItem._id);
 
-    window.open(selectedItem.reporte[0].url)
+    window.open(url);
     setAlerta({
       msg,
       error,

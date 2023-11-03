@@ -618,7 +618,7 @@ const TramiteProvider = ({ children }) => {
         withCredentials: true,
       });
       console.log(response)
-      return { msg: response.data.message, error: false };
+      return {url:response.data.url, msg: response.data.message, error: false };
       // console.log(response.data.message);
     } catch (error) {
       console.log(error)
