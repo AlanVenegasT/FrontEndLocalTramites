@@ -3,6 +3,7 @@ import {
   EnvelopeIcon,
   UserIcon,
   FolderIcon,
+  ChevronLeftIcon,
 } from "@heroicons/react/20/solid";
 import { Tooltip, Typography } from "@material-tailwind/react";
 import Alerta from "../Alerta";
@@ -43,6 +44,7 @@ const ProyectoPage = () => {
   formData.append("archivo", archivo);
 
   const handleFileChange = (file) => {
+    
     setArchivo(file);
   };
 
@@ -111,6 +113,8 @@ const ProyectoPage = () => {
       });
     }
     setArchivo(null);
+
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -154,16 +158,17 @@ const ProyectoPage = () => {
             </li>
             <li>
               <div className="flex items-center">
-                <ChevronRightIcon
+                <ChevronLeftIcon
                   className="h-5 w-5 flex-shrink-0 text-slate-900/[0.8]"
                   aria-hidden="true"
                 />
                 <a
-                  href=""
+                  href="/dashboard/proyecto"
                   className="ml-4 text-sm font-medium text-slate-900/[0.8]"
                 >
-                  Datos de usuario
+                  Regresar
                 </a>
+                
               </div>
             </li>
           </ol>
@@ -173,75 +178,59 @@ const ProyectoPage = () => {
             <>
               <div>
                 <div className="px-4 sm:px-0">
-                  <h3 className="text-base font-semibold leading-7 text-gray-900">
+                  <h3 className="text-base font-semibold leading-7 text-gray-1000">
                     {proyecto.nombre}
                   </h3>
                   <div className="border-b h-1 pt-4"></div>
                   <p className="mt-4 max-w-4xlxl text-sm leading-6 text-gray-500">
-                    <span className="font-medium text-amber-500">Notas:</span>{" "}
+                    <span className="font-medium text-amber-600">Notas:</span>{" "}
                     {proyecto.notas}
                   </p>
                 </div>
                 <div className="mt-6 border-t border-gray-100">
                   <dl className="divide-y divide-gray-100">
-                    <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">
-                        Id del proyecto:
-                      </dt>
-                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        {proyecto._id}
-                      </dd>
-                    </div>
-                    <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">
-                        Id del tramite:
-                      </dt>
-                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        {proyecto.idt[0].id}
-                      </dd>
-                    </div>
-                    <div className="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+                    
+                    
+                    <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-3">
                       <dt className="text-sm font-medium leading-6 text-gray-900">
                         Status de la tarea:
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {proyecto.estado}
                       </dd>
-                    </div>
-                    <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+
                       <dt className="text-sm font-medium leading-6 text-gray-900">
-                        Fecha de creación del tramite:
+                        Fecha de creación:
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {proyecto.fechaIngresoTramite}
                       </dd>
                     </div>
-                    <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">
+
+                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-3">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
                         Fecha de prevención:
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {proyecto.fechaPrevencion}
                       </dd>
-                    </div>
-                    <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
                       <dt className="text-sm font-medium leading-6 text-gray-900">
                         Fecha de respuesta:
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {proyecto.fechaRespuesta}
                       </dd>
+                    
+                      
                     </div>
-                    <div className="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+                    <div className="bg-gray-100 px-4 py-6 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-3">
                       <dt className="text-sm font-medium leading-6 text-gray-900">
                         Fecha de respuesta de prevención:
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {proyecto.fechaRespuestaPrevencion}
                       </dd>
-                    </div>
-                    <div className="bg-white px-4 py-6 sm:px-3">
-                      <dt className="text-sm font-medium flex leading-6 text-gray-900">
+                      <dt className="text-sm font-medium flex leading-5 text-gray-900">
                         Requisitos del proyecto:{" "}
                         <span className="mt-1 ml-3">
                           <Tooltip

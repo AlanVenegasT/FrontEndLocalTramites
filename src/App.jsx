@@ -23,6 +23,7 @@ import Page404 from "./pages/public/Page404";
 import Proyecto from "./pages/private/Dashboard/Proyecto";
 import { ProyectoProvider } from "./context/ProyectoProvider";
 import ProyectoPage from "./components/Proyecto/ProyectoPage";
+import {BaseDatos} from "./pages/private/Dashboard/BaseDatos";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
                   <Route path="panel-admin" element={<InformacionAdmin />} />
                   <Route path="password-admin" element={<PasswordAdmin />} />
                   <Route path="proyecto" element={<Proyecto />} />
+                  <Route path="baseDatos" element={<BaseDatos />} />
                 </Route>
 
                 <Route path="*" element={<Page404 />} />

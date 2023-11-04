@@ -627,6 +627,20 @@ const TramiteProvider = ({ children }) => {
     }
   };
 
+  const eliminarTramitesAll = async () => {
+    try {
+      const response = await axiosClient.delete('/tramiteController/borrar/all', {
+        withCredentials: true,
+      });
+      return (response.data);
+
+    } catch ({response}) {
+      const {data} = response;
+      return (data);
+
+    }
+  };
+
   return (
     <TramiteContext.Provider
       value={{
@@ -639,6 +653,7 @@ const TramiteProvider = ({ children }) => {
         consultarTodosTramites,
         buscarTramite,
         descargarTramite,
+        eliminarTramitesAll,
       }}
     >
       {children}

@@ -3,8 +3,10 @@ import { FolderIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Alerta from "../../Alerta";
 import useTramite from "../../../hooks/useTramite";
+import { PantallaCarga } from "../../PantallaCarga";
 
 const CargarTramite = () => {
+  const [mostrarPantallaEspera, setMostrarPantallaEspera] = useState(false); // Nuevo estado
   const { cargarExcel } = useTramite();
   const [alerta, setAlerta] = useState({});
   const [archivo, setArchivo] = useState();
@@ -46,7 +48,7 @@ const CargarTramite = () => {
     if (
       archivo.type !== "application/vnd.ms-excel" &&
       archivo.type !==
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     ) {
       setAlerta({
         msg: "Solo se admiten archivos de excel xlsx",
@@ -55,12 +57,23 @@ const CargarTramite = () => {
       return;
     }
     setAlerta({});
-    const { msg, error } = await cargarExcel(formData);
-    setAlerta({
-      msg,
-      error,
-    });
-    setArchivo("");
+    setMostrarPantallaEspera(true);
+    try {
+      const { msg, error } = await cargarExcel(formData);
+      setMostrarPantallaEspera(true);
+      console.log(msg, error)
+      setAlerta({
+        msg,
+        error,
+      });
+      setArchivo("");
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setMostrarPantallaEspera(false); // Ocultar la pantalla flotante sin importar el resultado
+    }
+
   };
 
   const { msg } = alerta;
@@ -102,97 +115,101 @@ const CargarTramite = () => {
               </li>
             </ol>
           </nav>
-          <div className="flex flex-wrap items-start col-span-12 intro-y sm:flex-nowrap"></div>
-          <div className="border hover:drop-shadow-2xl border-black/10 p-6 my-8 duration-300 bg-white">
-            {" "}
-            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="sm:flex sm:items-center">
-                <div className="sm:flex-auto">
-                  <h1 className="text-base font-semibold leading-6 text-gray-900">
-                    Trámites masivos
-                  </h1>
-                  <p className="mt-2 text-md text-gray-700">
-                    En este apartado puedes cargar un excel, el cual debe
-                    contener varios tramites para guardarlos en la base de datos
-                  </p>
-                </div>
-              </div>
-              <section className="sm:my-5">
-                <div className="col-span-full">
-                  <label
-                    htmlFor="cover-photo"
-                    className="block text-md font-semibold leading-6 text-gray-900"
-                  >
-                    Cargar archivo:
-                  </label>
-                  <div
-                    className={`mt-2 flex justify-center border ${
-                      archivo
-                        ? "border-indigo-600"
-                        : "border-dashed border-gray-900/25"
-                    } px-6 py-32`}
-                    onDragOver={handleDragOver}
-                    onDragEnter={handleDragEnter}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                  >
-                    <div className="text-center ">
-                      <FolderIcon
-                        className="mx-auto w-20 text-red-300"
-                        aria-hidden="true"
-                      />
-                      {archivo ? (
-                        <>
-                          <div>
-                            <p className="font-bold text-lg">{archivo.name}</p>
 
-                            <div className="flex justify-between duration-300 gap-x-8 mt-5 items-center ">
-                              <button
-                                className="bg-blue-400 w-40 duration-400 hover:bg-blue-500 text-slate-50 shadow rounded-2xl font-semibold text-lg py-2 px-5"
-                                type="submit"
-                                onClick={handleSubmit}
-                              >
-                                Enviar
-                              </button>
-                              <button
-                                className="bg-red-500 w-40 duration-400 hover:bg-red-600 text-slate-50 shadow rounded-2xl font-semibold text-lg py-2 px-5"
-                                onClick={() => setArchivo("")}
-                              >
-                                Cancelar
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="my-4 flex text-lg text-gray-600">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer rounded-md bg-white font-semibold sm:text-slate-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 "
-                            >
-                              <span className="sm:bg-blue-400 duration-300 hover:bg-blue-300 sm:px-4 sm:py-1 sm:mr-1 rounded-lg">
-                                Sube tu archivo
-                              </span>
-                              <input
-                                onChange={(e) =>
-                                  handleFileChange(e.target.files[0])
-                                }
-                                id="file-upload"
-                                name="file-upload"
-                                type="file"
-                                className="sr-only"
-                              />
-                            </label>
-                            <p className="">o arrastra y suelta</p>
-                          </div>
-                          <p className="text-md  text-gray-600">XLSX</p>
-                        </>
-                      )}
-                    </div>
+          <div>
+            <div className="border hover:drop-shadow-2xl border-black/10 p-6 my-8 duration-300 bg-white">
+              {" "}
+              <div className="px-4 sm:px-6 lg:px-8">
+                <div className="sm:flex sm:items-center">
+                  <div className="sm:flex-auto">
+                    <h1 className="text-base font-semibold leading-6 text-gray-900">
+                      Trámites masivos
+                    </h1>
+                    <p className="mt-2 text-md text-gray-700">
+                      En este apartado puedes cargar un excel, el cual debe
+                      contener varios tramites para guardarlos en la base de datos
+                    </p>
                   </div>
                 </div>
-              </section>
+                <section className="sm:my-5">
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="cover-photo"
+                      className="block text-md font-semibold leading-6 text-gray-900"
+                    >
+                      Cargar archivo:
+                    </label>
+                    <div
+                      className={`mt-2 flex justify-center border ${archivo
+                        ? "border-indigo-600"
+                        : "border-dashed border-gray-900/25"
+                        } px-6 py-32`}
+                      onDragOver={handleDragOver}
+                      onDragEnter={handleDragEnter}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
+                    >
+                      <div className="text-center ">
+                        <FolderIcon
+                          className="mx-auto w-20 text-red-300"
+                          aria-hidden="true"
+                        />
+                        {archivo ? (
+                          <>
+                            <div>
+                              <p className="font-bold text-lg">{archivo.name}</p>
+
+                              <div className="flex justify-between duration-300 gap-x-8 mt-5 items-center ">
+                                <button
+                                  className="bg-blue-400 w-40 duration-400 hover:bg-blue-500 text-slate-50 shadow rounded-2xl font-semibold text-lg py-2 px-5"
+                                  type="submit"
+                                  onClick={handleSubmit}
+                                >
+                                  Subir
+                                </button>
+                                <button
+                                  className="bg-red-500 w-40 duration-400 hover:bg-red-600 text-slate-50 shadow rounded-2xl font-semibold text-lg py-2 px-5"
+                                  onClick={() => setArchivo("")}
+                                >
+                                  Cancelar
+                                </button>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="my-4 flex text-lg text-gray-600">
+                              <label
+                                htmlFor="file-upload"
+                                className="relative cursor-pointer rounded-md bg-white font-semibold sm:text-slate-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 "
+                              >
+                                <span className="sm:bg-blue-400 duration-300 hover:bg-blue-300 sm:px-4 sm:py-1 sm:mr-1 rounded-lg">
+                                  Sube tu archivo
+                                </span>
+                                <input
+                                  onChange={(e) =>
+                                    handleFileChange(e.target.files[0])
+                                  }
+                                  id="file-upload"
+                                  name="file-upload"
+                                  type="file"
+                                  className="sr-only"
+                                />
+                              </label>
+                              <p className="">o arrastra y suelta</p>
+                            </div>
+                            <p className="text-md  text-gray-600">XLSX</p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
             </div>
+            {mostrarPantallaEspera && (
+              <PantallaCarga />
+            )}
           </div>
         </div>
       </div>

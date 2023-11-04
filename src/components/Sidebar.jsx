@@ -42,6 +42,7 @@ const navigation = [
       { name: "Crear", href: "/dashboard/crear" },
       { name: "Editar", href: "/dashboard/editar-buscar" },
       { name: "Cargar excel", href: "/dashboard/cargar" },
+      { name: "Base de Datos", href: "/dashboard/baseDatos" },
     ],
   },
   {
