@@ -72,7 +72,7 @@ const NuevoPasswordForm = () => {
     }
 
     try {
-      const url = `https://plankton-app-wit7e.ondigitalocean.app/api/auth/olvide-password/${token}`;
+      const url = `https://plankton-app-wit7e.ondigitalocean.app/api/auth/olvide-password/${token}`; //
       await axiosClient.post(url, { password });
       setAlerta({
         msg: "Contraseña actualizada correctamente",
