@@ -3,7 +3,6 @@ import { useState } from "react";
 import useTramite from "../../../hooks/useTramite";
 import { PantallaCarga } from "../../PantallaCarga";
 import Alerta from "../../Alerta";
-import { data } from "autoprefixer";
 
 export const Eliminar = () => {
   const [alerta, setAlerta] = useState({});

@@ -19,9 +19,9 @@ const PrincipalLayout = () => {
   return (
     <>
       {/* MENU RESPOSIVO */}
-      <div className=" flex items-center gap-x-6 bg-slate-900 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+      <div className=" flex items-center gap-x-6 bg-[#E12E2E] px-4 py-4 shadow-sm sm:px-6 lg:hidden">
         <div className="flex-1 text-sm font-semibold leading-6 text-slate-50">
-          Dashboard
+          IKTAN Strategies
         </div>
         <button
           type="button"
@@ -38,7 +38,7 @@ const PrincipalLayout = () => {
 
         <main className="py-8 lg:pl-72 bg-white">
           <div className="xl:px-2 lg:pl-0 lg:pr-4">
-            <div className=" rounded-xl xl:ml-10 mt-20 lg:ml-0 lg:mr-4 xl:mr-4">
+            <div className=" rounded-xl xl:ml-10 mt-0 lg:ml-0 lg:mr-4 xl:mr-4">
               <Outlet />
             </div>
           </div>

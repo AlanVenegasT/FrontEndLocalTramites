@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://seal-app-y62qh.ondigitalocean.app/api/tramiteController/mostrarTramitesTodo" //Se le agrego esto. /tramiteController/mostrarTramitesTodo  
+const API_URL = "https://plankton-app-wit7e.ondigitalocean.app/api/tramiteController/mostrarTramitesTodo" //Se le agrego esto. /tramiteController/mostrarTramitesTodo  https://seal-app-y62qh.ondigitalocean.app/api
 
 export const obtenerTramites = async () => {
   try {

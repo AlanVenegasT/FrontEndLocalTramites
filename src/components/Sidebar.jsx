@@ -6,6 +6,8 @@ import {
   PhotoIcon,
   WindowIcon,
   XMarkIcon,
+  UsersIcon,
+  ChatBubbleOvalLeftEllipsisIcon
 } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
@@ -31,6 +33,13 @@ const navigation = [
       { name: "Datos", href: "/dashboard/panel-admin" },
       { name: "Contraseña", href: "/dashboard/password-admin" },
     ],
+  },
+  {
+    user: "Admin",
+    name: " Administrador de Usuarios",
+    icon: UsersIcon,
+    href: "/dashboard/administrador-usuarios",
+    current: false,
   },
   {
     user: "Admin",
@@ -62,6 +71,12 @@ const navigation = [
     name: "Proyecto",
     href: "/dashboard/proyecto",
     icon: WindowIcon,
+    current: false,
+  },
+  {
+    name: "Soporte",
+    href: "/dashboard/soporte",
+    icon: ChatBubbleOvalLeftEllipsisIcon,
     current: false,
   },
 ];

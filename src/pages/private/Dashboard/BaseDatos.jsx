@@ -1,4 +1,4 @@
-import { Page } from "../../../components/BaseDatos/page"
+import { Page }  from "../../../components/BaseDatos/page"
 
 export const BaseDatos = () => {
   return (

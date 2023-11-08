@@ -21,9 +21,13 @@ import InformacionAdmin from "./pages/private/Dashboard/Admin/InformacionAdmin";
 import PasswordAdmin from "./pages/private/Dashboard/Admin/PasswordAdmin";
 import Page404 from "./pages/public/Page404";
 import Proyecto from "./pages/private/Dashboard/Proyecto";
+import Usuario from "./pages/private/Dashboard/Usuario";
+import Soporte from "./pages/private/Dashboard/Soporte";
 import { ProyectoProvider } from "./context/ProyectoProvider";
+import { UsuarioProvider } from "./context/UsuarioProvider";
 import ProyectoPage from "./components/Proyecto/ProyectoPage";
 import {BaseDatos} from "./pages/private/Dashboard/BaseDatos";
+
 
 function App() {
   return (
@@ -32,6 +36,7 @@ function App() {
         <AuthProvider>
           <TramiteProvider>
             <ProyectoProvider>
+              <UsuarioProvider>
               <Routes>
                 <Route path="/" element={<AuthLayout />}>
                   <Route index element={<Login />} />
@@ -59,10 +64,18 @@ function App() {
                   <Route path="password-admin" element={<PasswordAdmin />} />
                   <Route path="proyecto" element={<Proyecto />} />
                   <Route path="baseDatos" element={<BaseDatos />} />
+
+                  {/*Administrador de Usuarios */}
+                  <Route path="administrador-usuarios" element={<Usuario />} />
+
+                  {/*Soporte*/}
+                  <Route path="soporte" element={<Soporte/>} />
+
                 </Route>
 
                 <Route path="*" element={<Page404 />} />
               </Routes>
+              </UsuarioProvider>
             </ProyectoProvider>
           </TramiteProvider>
         </AuthProvider>
