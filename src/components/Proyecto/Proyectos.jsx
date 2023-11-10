@@ -9,6 +9,7 @@ import useProyecto from "../../hooks/useProyecto";
 const Proyectos = () => {
   const { obtenerProyectos, eliminarProyecto, crearProyecto, editarProyecto } =
     useProyecto();
+    console.log(obtenerProyectos)
 
   const [alerta, setAlerta] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);

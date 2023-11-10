@@ -4,6 +4,7 @@ import {
   UserIcon,
   FolderIcon,
   ChevronLeftIcon,
+  ArrowUpTrayIcon
 } from "@heroicons/react/20/solid";
 import { Tooltip, Typography } from "@material-tailwind/react";
 import Alerta from "../Alerta";
@@ -520,7 +521,7 @@ const ProyectoPage = () => {
           <div className="flex justify-center">
             <div className="flex justify-between gap-x-8 mt-4 items-center mr-4">
               <label
-                className=" bg-blue-400 w-40 duration-500 rounded-2xl hover:bg-blue-400/50 text-slate-50 font-medium text-sm px-3 py-4"
+                className="flex text-center justify-between bg-blue-400 w-40 duration-500 rounded-2xl hover:bg-blue-400/50 text-slate-50 font-medium text-sm px-4 py-4"
                 htmlFor="file-upload"
               >
                 Cargar archivo
@@ -530,6 +531,10 @@ const ProyectoPage = () => {
                   name="file-upload"
                   type="file"
                   className="sr-only"
+                />
+                <ArrowUpTrayIcon
+                className="h-5 w-5 flex-shrink-0 "
+                aria-hidden="true"
                 />
               </label>
             </div>

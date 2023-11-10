@@ -19,10 +19,10 @@ export default function ListProyectos({ proyecto, handleEliminarProyecto, hanlde
     <>
     
     <li className="overflow-hidden rounded-md border">
-      <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-        <div className="text-sm font-medium leading-6 text-gray-900">
-          {proyecto.nombre}
-        </div>
+    <div className={`flex items-center gap-x-4 border-b ${statuses[proyecto.estado]} ${proyecto.estado !== 'Iniciado' ? statuses[proyecto.estado] : ''} p-6`}>
+        <div className={`text-sm font-medium leading-6 ${statuses[proyecto.estado]} ${proyecto.estado !== 'Iniciado' ? statuses[proyecto.estado] : ''}`}>
+  {proyecto.nombre}
+</div>
         <Menu as="div" className="relative ml-auto">
           <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
             <span className="sr-only">Open options</span>
@@ -81,10 +81,10 @@ export default function ListProyectos({ proyecto, handleEliminarProyecto, hanlde
         </Menu>
       </div>
       <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
-      <div className="flex justify-between gap-x-4 py-3">
+      {/* <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-gray-500">Id del proyecto:</dt>
           <dd className="text-gray-700 truncate">{proyecto._id}</dd>
-        </div>
+        </div> */}
         <div className="flex justify-between gap-x-4 py-3">
           <dt className="text-gray-500">Notas:</dt>
           <dd className="text-gray-700 truncate">{proyecto.notas}</dd>

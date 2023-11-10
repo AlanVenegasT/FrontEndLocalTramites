@@ -103,25 +103,6 @@ const ModalCrearProyecto = ({
                     />
                   </div>
                 </div>
-                <div className="flex gap-3 w-full">
-                  <div className="w-full">
-                    <label
-                      htmlFor="nombre"
-                      className="block mb-2 text-sm font-medium text-gray-500"
-                    >
-                      Notas:
-                    </label>
-                    <input
-                      type="text"
-                      name="nombre"
-                      id="nombre"
-                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      placeholder="Nombre"
-                      value={notas}
-                      onChange={(e) => setNotas(e.target.value)}
-                    />
-                  </div>
-                </div>
       
       
                 <div className="flex gap-3 w-full">
@@ -196,6 +177,26 @@ const ModalCrearProyecto = ({
                 </div>
                 )}
           
+          <div className="flex gap-3 w-full">
+                  <div className="w-full">
+                    <label
+                      htmlFor="nombre"
+                      className="block mb-2 text-sm font-medium text-gray-500"
+                    >
+                      Notas:
+                    </label>
+                    <textarea                        //Se le cambio a text area para que se pueda visualizar, se cambio por input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder="Notas"
+                      value={notas}
+                      onChange={(e) => setNotas(e.target.value)}
+                    />
+                  </div>
+                </div>
+
                 {Object.keys(proyectoSelected).length > 0 ? (
                   <input
                     type="submit"
@@ -209,6 +210,8 @@ const ModalCrearProyecto = ({
                     className="justify-center rounded-3xl hover:scale-95 bg-blue-400 px-10 py-3  text-sm font-semibold leading-6 duration-300 hover:duration-300 text-white shadow-sm hover:bg-blue-300 focus-visible:outline "
                   />
                 )}
+
+                
               </form>
             </div>
           </div>

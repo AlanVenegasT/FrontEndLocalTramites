@@ -3,18 +3,21 @@ import useTramite from "../../../hooks/useTramite";
 import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import Alerta from "../../Alerta";
+import { PantallaCarga } from "../../PantallaCarga";
 
 const Tramites = () => {
   const { selectedItem, setSelectedItem, descargarTramite } = useTramite();
   const [alerta, setAlerta] = useState({});
+  const [mostrarPantallaEspera, setMostrarPantallaEspera] = useState(false); // 
 
   // console.log(selectedItem.reporte[0].url);
   if (selectedItem.length <= 0) return <Navigate to="/dashboard" />;
 
   const handleDescargarTramite = async () => {
+    setMostrarPantallaEspera(true);
     setAlerta({})
     const {url, msg, error } = await descargarTramite(selectedItem._id);
-
+    setMostrarPantallaEspera(false);
     window.open(url);
     setAlerta({
       msg,
@@ -82,6 +85,8 @@ const Tramites = () => {
                     Regresar
                   </Link>
                 </div>
+                {/* BOTON DE DESCARGAR!!!
+                
                 <div className="w-72 mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0">
                   <button
                     onClick={() => handleDescargarTramite()}
@@ -90,8 +95,12 @@ const Tramites = () => {
                     Descargar
                   </button>
                 </div>
+                
+                */}
+                
               </div>
             </div>
+            <div>
             <div className="grid grid-cols-12 border rounded-md p-6 mt-6 bg-white gap-4">
               {/* Titulo y Datos */}
               <div className="text-sm sm:col-span-3 col-span-12  grid grid-cols-2 border">
@@ -147,9 +156,9 @@ const Tramites = () => {
                 </p>
               </div>
               {/* Imagen */}
-              <div className="col-span-12 py-2 border">
+              {/* <div className="col-span-12 py-2 border">
                 <img src="" alt="imagen de prueba" />
-              </div>
+              </div> */}
               {/* Datos e Imagen */}
               <div className="text-sm col-span-12 grid grid-cols-12 border">
                 <div className="sm:col-span-3 col-span-12 grid grid-cols-2 border-b">
@@ -232,7 +241,7 @@ const Tramites = () => {
                       </p>
                     </div>
                     <div className="sm:col-span-8 col-span-12 grid grid-cols-6 border-x p-1">
-                      <img src="" alt="imagen de prueba" />
+                      <img src="" alt="" />
                     </div>
                     <div className="sm:col-span-2 col-span-12 grid grid-cols-2">
                       <h3 className="sm:col-start-1 sm:col-end-7 col-span-12 pl-1 font-bold text-black border-b ">
@@ -310,6 +319,11 @@ const Tramites = () => {
                   {selectedItem ? selectedItem.tramites[29].valor : ""}
                 </p>
               </div>
+            </div>
+            {/* Ventana de espera */}
+            {mostrarPantallaEspera && (
+              <PantallaCarga />
+            )}
             </div>
           </div>
         </div>
