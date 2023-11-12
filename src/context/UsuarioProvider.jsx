@@ -42,10 +42,36 @@ const UsuarioProvider = ({ children }) => {
         }
     };
 
+    const editarUsuario = async (
+        id,
+        nombre,
+        correo,
+        estado,
+        rol
+    ) => {
+        try {
+            const data = await axiosClient.put(
+                `/usuarios/${id}`,
+                {
+                    nombre,
+                    correo,
+                    estado,
+                    rol
+                },
+                { withCredentials: true }
+            );
+            console.log(data);
+            return { msg: data.data.message, error: false };
+        } catch(error){
+            return { msg: "Error al editar el proyecto", error: true };
+        }
+    };
+
     return(
         <UsuarioContext.Provider
         value={{
             consultarUsuarios,
+            editarUsuario,
             eliminarUsuario
         }}
         >

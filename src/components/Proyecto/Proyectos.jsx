@@ -185,7 +185,7 @@ const Proyectos = () => {
                 >
                   {proyectos.map((proyecto) => (
                     <ListProyectos
-                      key={proyecto.id}
+                      key={proyecto._id}
                       proyecto={proyecto}
                       handleEliminarProyecto={handleEliminarProyecto}
                       hanldeSelectProyecto={hanldeSelectProyecto}

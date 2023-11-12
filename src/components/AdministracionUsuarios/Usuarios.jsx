@@ -2,16 +2,25 @@ import { useEffect, useState } from "react";
 import Alerta from "../Alerta";
 import useUsuario from "../../hooks/useUsuario";
 import ListUsuarios from "./ListUsuarios";
+import ModalCrearUsuario from "./ModalCrearUsuario";
+// import ModalCrearUsuario from
 
 const Usuarios = () => {
 
-  const { consultarUsuarios, eliminarUsuario } = useUsuario();
+  const { consultarUsuarios, eliminarUsuario , editarUsuario } = useUsuario();
+  
 
   const [alerta, setAlerta] = useState({});
   const [usuarios, setUsuarios] = useState([]);
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   //form 
+  const [nombre, setNombre] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [estado, setEstado] = useState("");
+  const [rol, setRol] = useState("USER_ROLE");  
   const [reload, setReload] = useState(false);
+
+  const [usuarioSelected, setUsuarioSelected] = useState({});
 
   useEffect(() => {
     setReload(false);
@@ -26,6 +35,37 @@ const Usuarios = () => {
   // console.log("Usuarios data", usuarios.data)
     //  console.log(usuarios[0].uid)
 
+  const openModal = () =>{
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setUsuarioSelected({}); //restablece proyectoSelected a un objeto vacío 
+    setModalIsOpen(false); //cierra el modal.
+  };
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    setAlerta({});
+
+    if (usuarioSelected.uid) {
+      const { msg, error } = await editarUsuario(
+        usuarioSelected.uid,
+        nombre,
+        correo,
+        estado,
+        rol
+      );
+      setUsuarioSelected({});
+      setAlerta({
+        msg,
+        error,
+      });
+      setReload(true);
+    }
+  }
+  
+
   const handleEliminarUsuario = async (id) => {
     setAlerta({});
     const {msg, error} = await eliminarUsuario(id);
@@ -36,27 +76,39 @@ const Usuarios = () => {
     setReload(true);
   };
 
+  //La función hanldeSelectProyecto se utiliza cuando se hace clic en el botón de editar en ListProyectos. Actualiza el estado proyectoSelected con la información del proyecto seleccionado y abre el modal.
+  const handleSelectUsuario = (usuario) =>{
+    setUsuarioSelected(usuario);
+    openModal();
+  }
+
+
   const { msg } = alerta;
   return (
     <div className="px-4 sm:px-6 lg:px-8 lg:mt-20 xl:mt-20">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">Users</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title, email and role.
-          </p>
+          <h1 className="text-base font-semibold leading-6 text-gray-900">Usuarios</h1>
+          
         </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Add user
-          </button>
-        </div>
+        
       </div>
 
-        
+      <ModalCrearUsuario
+      modalIsOpen={modalIsOpen}
+      closeModal={closeModal}
+      handleSubmit={handleSubmit}
+      nombre={nombre}
+      correo={correo}
+      estado={estado}
+      rol={rol}
+      setNombre={setNombre}
+      setCorreo={setCorreo}
+      setEstado={setEstado}
+      setRol={setRol}
+      usuarioSelected={usuarioSelected}
+      />
+
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -83,6 +135,7 @@ const Usuarios = () => {
                   key={usuario.uid}
                   usuario={usuario} 
                   handleEliminarUsuario={handleEliminarUsuario}
+                  handleSelectUsuario={handleSelectUsuario}
                 />
                 ))}
               </tbody>
@@ -90,8 +143,6 @@ const Usuarios = () => {
           </div>
         </div>
       </div>
-
-
     </div>
   )
 }

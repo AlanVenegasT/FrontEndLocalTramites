@@ -1,34 +1,28 @@
 import {
-  ChevronRightIcon,
-  EnvelopeIcon,
-  UserIcon,
-  FolderIcon,
-  ChevronLeftIcon,
   ArrowUpTrayIcon
 } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 import { Tooltip, Typography } from "@material-tailwind/react";
 import Alerta from "../Alerta";
 import { Switch } from "@headlessui/react";
 import useProyecto from "../../hooks/useProyecto";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { PantallaCarga } from "../PantallaCarga";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const ProyectoPage = () => {
+  const [mostrarPantallaEspera, setMostrarPantallaEspera] = useState(false); // Nuevo estado
   const { cargarArchivo, obtenerProyectos } = useProyecto();
   const [archivo, setArchivo] = useState(null);
   const [alerta, setAlerta] = useState({});
   const [reload, setReload] = useState(false);
   const [proyecto, setProyecto] = useState({});
-  const [enabled, setEnabled] = useState(false);
   const { id } = useParams();
   const [switchStates, setSwitchStates] = useState([]);
-  const [archivoUrl, setArchivoUrl] = useState(null);
-
-  console.log(proyecto);
 
   const toggleSwitch = (index) => {
     // Crea una copia del array switchStates actual
@@ -96,6 +90,7 @@ const ProyectoPage = () => {
     }
 
     setAlerta({});
+    setMostrarPantallaEspera(true);
     try {
       const { msg, error } = await cargarArchivo(
         archivo,
@@ -106,6 +101,7 @@ const ProyectoPage = () => {
         msg,
         error,
       });
+      
     } catch (error) {
       console.error(error);
       setAlerta({
@@ -113,6 +109,7 @@ const ProyectoPage = () => {
         error: true,
       });
     }
+    setMostrarPantallaEspera(false);
     setArchivo(null);
 
     window.location.reload();
@@ -142,39 +139,20 @@ const ProyectoPage = () => {
   return (
     <>
       {msg && <Alerta alerta={alerta} />}
-
+      {mostrarPantallaEspera && (
+              <PantallaCarga />
+            )}
       <div className="px-4 py-4 md:px-6 lg:px-8">
-        <nav className="flex justify-between" aria-label="Breadcrumb">
-          <ol role="list" className="flex items-center space-x-4">
-            <li>
-              <div>
-                <a className="text-slate-900/[0.8]">
-                  <UserIcon
-                    className="h-5 w-5 flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                  <span className="sr-only">Home</span>
-                </a>
-              </div>
-            </li>
-            <li>
-              <div className="flex items-center">
-                <ChevronLeftIcon
-                  className="h-5 w-5 flex-shrink-0 text-slate-900/[0.8]"
-                  aria-hidden="true"
-                />
-                <a
-                  href="/dashboard/proyecto"
-                  className="ml-4 text-sm font-medium text-slate-900/[0.8]"
-                >
-                  Regresar
-                </a>
-                
-              </div>
-            </li>
-          </ol>
-        </nav>
+        
         <div className="border hover:drop-shadow-2xl border-black/10 p-6 my-8 duration-300 bg-white">
+        <div className="w-72 mt-3 sm:w-auto sm:mt-0 sm:ml-auto md:ml-0 mb-4">
+                  <Link
+                    className="bg-red-500 hover:bg-red-400 px-5 py-1.5 text-center rounded-md text-slate-50 font-semibold"
+                    to="/dashboard/proyecto"
+                  >
+                    Regresar
+                  </Link>
+                </div>
           {reload && proyecto ? (
             <>
               <div>
@@ -194,7 +172,7 @@ const ProyectoPage = () => {
                     
                     <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-3">
                       <dt className="text-sm font-medium leading-6 text-gray-900">
-                        Status de la tarea:
+                        Estado del proyecto:
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                         {proyecto.estado}
@@ -273,16 +251,16 @@ const ProyectoPage = () => {
                         </span>
                       </dt>
                     </div>
-                    <div className="md:grid pt-4 md:grid-cols-3 md:gap-3">
+                    <div className="md:grid pt-4 md:gap-3">
                       {proyecto.requisitos ? (
                         proyecto.requisitos.map((requisito, index) => (
                           <div key={index}>
                             <div className="mt-2 text-sm my-3 md:my-0 text-gray-900 sm:col-span-2 sm:mt-0 ">
                               <ul
                                 role="list"
-                                className="divide-y divide-gray-100 rounded-md border border-gray-200"
+                                className="divide-y divide-gray-100 rounded-md border border-gray-200 pt-2"
                               >
-                                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                <li className="flex items-center justify-between py-1 pl-5 pr-5 text-sm leading-6">
                                   <div className="flex w-0 flex-1 items-center">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -302,7 +280,7 @@ const ProyectoPage = () => {
                                       />
                                     </svg>
                                     <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                      <span className="flex-shrink-0 text-black font-medium">
+                                      <span className="text-black font-medium">
                                         {requisito.requisito}
                                       </span>
                                     </div>

@@ -121,7 +121,7 @@ export const calculatePasswordStrength = (password) => {
     try {
       await axiosClient.post("/auth/registrar", { nombre, correo, password });
       setAlerta({
-        msg: "Usuario registrado correctamente, confirme su cuenta",
+        msg: "Tu solicitud ha sido recibida. El administrador revisará y procesará tu acceso en 24 horas. ",//Usuario registrado correctamente, confirme su cuenta
         error: false,
       });
     } catch (error) {

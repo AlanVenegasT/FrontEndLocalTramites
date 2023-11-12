@@ -20,12 +20,12 @@ const ModalCrearProyecto = ({
   proyectoSelected,
 }) => {
 
-  const {consultarTramites, consultarTodosTramites} = useTramite();
+  const { consultarTramites, consultarTodosTramites } = useTramite();
   const [tramites, SetTramites] = useState([]);
   useEffect(() => {
-    const getTramites = async() => {
-      const {respuesta} = await consultarTodosTramites();
-      const {data} = respuesta;
+    const getTramites = async () => {
+      const { respuesta } = await consultarTodosTramites();
+      const { data } = respuesta;
       SetTramites(data?.data);
     }
     if (proyectoSelected) {
@@ -35,7 +35,7 @@ const ModalCrearProyecto = ({
       setFechaIngresoTramite(proyectoSelected.fechaIngresoTramite);
       setNotas(proyectoSelected.notas);
     }
-   getTramites();
+    getTramites();
   }, [proyectoSelected]);
   return (
     <Modal
@@ -103,8 +103,8 @@ const ModalCrearProyecto = ({
                     />
                   </div>
                 </div>
-      
-      
+
+
                 <div className="flex gap-3 w-full">
                   <div className="w-1/2">
                     <label
@@ -145,39 +145,40 @@ const ModalCrearProyecto = ({
                       <option value="Terminado">Terminado</option>
                       {/* Agrega más opciones según tus necesidades */}
                     </select>
+
                   </div>
                 </div>
                 {Object.keys(proyectoSelected).length > 0 ? (
                   <button className="hidden"></button>
                 ) : (
-                    <div className="w-full">
-                  <label
-                    htmlFor="tramites"
-                    className="block mb-2 text-sm font-medium text-gray-500"
-                  >
-                    Tramites
-                  </label>
-                  <select
-                    name="tramites"
-                    id="tramites"
-                    className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    value={idt}
-                    onChange={(e) => setIdt(e.target.value)}
-                  >
+                  <div className="w-full">
+                    <label
+                      htmlFor="tramites"
+                      className="block mb-2 text-sm font-medium text-gray-500"
+                    >
+                      Tramites
+                    </label>
+                    <select
+                      name="tramites"
+                      id="tramites"
+                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      value={idt}
+                      onChange={(e) => setIdt(e.target.value)}
+                    >
 
-                    {tramites && tramites.map(tramite => (  <>
-                        {" "}
-                        <option value={tramite?._id}>
-                          {tramite?.tramites[24].valor}
-                        </option>
-                      </>)
-                    )}
-                    <option value="">Selecciona los Tramites</option>
-                  </select>
-                </div>
+                      {tramites && tramites.map(tramite => (
+                        <div key={tramite._id}>
+                          <option value={tramite._id}>
+                            {tramite.tramites[24].valor}
+                          </option>
+                        </div>
+                      ))}
+                      <option value="">Selecciona los Tramites</option>
+                    </select>
+                  </div>
                 )}
-          
-          <div className="flex gap-3 w-full">
+
+                <div className="flex gap-3 w-full">
                   <div className="w-full">
                     <label
                       htmlFor="nombre"
@@ -202,7 +203,7 @@ const ModalCrearProyecto = ({
                     type="submit"
                     value="Editar proyecto"
                     className="justify-center rounded-3xl hover:scale-95 bg-blue-400 px-10 py-3  text-sm font-semibold leading-6 duration-300 hover:duration-300 text-white shadow-sm hover:bg-blue-300 focus-visible:outline "
-                    />
+                  />
                 ) : (
                   <input
                     type="submit"
@@ -211,7 +212,7 @@ const ModalCrearProyecto = ({
                   />
                 )}
 
-                
+
               </form>
             </div>
           </div>
