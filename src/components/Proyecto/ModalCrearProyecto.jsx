@@ -37,6 +37,9 @@ const ModalCrearProyecto = ({
     }
     getTramites();
   }, [proyectoSelected]);
+
+  console.log(tramites)
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -157,25 +160,25 @@ const ModalCrearProyecto = ({
                       className="block mb-2 text-sm font-medium text-gray-500"
                     >
                       Tramites
-                    </label>
-                    <select
-                      name="tramites"
-                      id="tramites"
-                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      value={idt}
-                      onChange={(e) => setIdt(e.target.value)}
-                    >
+                  </label>
+                  <select
+                    name="tramites"
+                    id="tramites"
+                    className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5"
+                    value={idt}
+                    onChange={(e) => setIdt(e.target.value)}
+                  >
 
-                      {tramites && tramites.map(tramite => (
-                        <div key={tramite._id}>
-                          <option value={tramite._id}>
-                            {tramite.tramites[24].valor}
-                          </option>
-                        </div>
-                      ))}
-                      <option value="">Selecciona los Tramites</option>
-                    </select>
-                  </div>
+                    {tramites && tramites.map(tramite => (  <>
+                        {" "}
+                        <option value={tramite?._id}>
+                          {tramite?.tramites[24].valor}
+                        </option>
+                      </>)
+                    )}
+                    <option value="">Selecciona los Tramites</option>
+                  </select>
+                </div>
                 )}
 
                 <div className="flex gap-3 w-full">
