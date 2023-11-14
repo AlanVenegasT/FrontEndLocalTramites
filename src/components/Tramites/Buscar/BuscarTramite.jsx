@@ -39,6 +39,10 @@ const BuscarTramite = () => {
   const [limitSelected, setLimitSelected] = useState(false);
 
   useEffect(() => {
+   setLimitSelected(true);
+  }, []);
+
+  useEffect(() => {
     const traerTramites = async (paginate, opcionInput) => {
       const { respuesta, error } = await consultarTramites(
         paginate,
@@ -141,71 +145,71 @@ const BuscarTramite = () => {
           <div className="flex flex-wrap items-start col-span-12 intro-y sm:flex-nowrap">
           </div>
           <div className="border hover:drop-shadow-2xl border-black/10 p-6 my-8 duration-300 bg-white">            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="sm:flex sm:items-center">
-                <div className="sm:flex-auto">
-                  <h1 className="text-base font-semibold leading-6 text-gray-900">
-                    Tramites
-                  </h1>
-                  <p className="mt-2 lg:mr-8 text-md text-gray-700">
-                    En este apartado puedes buscar y acceder a una vista previa
-                    de los trámites que se encuentran en nuestra base de datos.
-                  </p>
-                </div>
-                <div className="relative w-1/2 text-slate-500">
-                  {limitSelected && (
-                    <>
-                      <input
-                        value={nombre}
-                        onChange={(e) => setNombre(e.target.value)}
-                        className="transition duration-200  border w-full ease-in-out text-sm border-slate-200 shadow-lg shadow-black/5 rounded-xl placeholder:text-slate-400/90 focus:ring-2 focus:ring-[#3366CC]  focus:border-[#3366CC] focus:border-opacity-40  p-4 !box"
-                        type="text"
-                        placeholder="Buscar trámite por nombre..."
-                      />
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="stroke-1.5 absolute inset-y-0 right-0 w-4 h-4 my-auto mr-3"
-                      >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                      </svg>
-                    </>
-                  )}
-                </div>
+            <div className="sm:flex sm:items-center">
+              <div className="sm:flex-auto">
+                <h1 className="text-base font-semibold leading-6 text-gray-900">
+                  Tramites
+                </h1>
+                <p className="mt-2 lg:mr-8 text-md text-gray-700">
+                  En este apartado puedes buscar y acceder a una vista previa
+                  de los trámites que se encuentran en nuestra base de datos.
+                </p>
               </div>
-              <div className="-mx-4 mt-5 sm:-mx-0">
-                {limitSelected ? (
+              <div className="relative w-1/2 text-slate-500">
+                {limitSelected && (
                   <>
-                    <TableTramites
-                    handleSelectedLimit={handleSelectedLimit}
-                      data={data}
-                      handleSelectItem={handleSelectItem}
-                      paginate={paginate}
-                      siguientePage={siguientePage}
-                      anteriorPage={anteriorPage}
+                    <input
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      className="transition duration-200  border w-full ease-in-out text-sm border-slate-200 shadow-lg shadow-black/5 rounded-xl placeholder:text-slate-400/90 focus:ring-2 focus:ring-[#3366CC]  focus:border-[#3366CC] focus:border-opacity-40  p-4 !box"
+                      type="text"
+                      placeholder="Buscar trámite por nombre..."
                     />
-                  </>
-                ) : (
-                  <>
-                    <div className="min-w-full divide-y md:h-[25rem]">
-                      <SelectOpcion
-                        opciones={opciones}
-                        opcionInput={opcionInput}
-                        setOpcionInput={setOpcionInput}
-                        handleSelectedLimit={handleSelectedLimit}
-                      />
-                    </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="stroke-1.5 absolute inset-y-0 right-0 w-4 h-4 my-auto mr-3"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
                   </>
                 )}
               </div>
             </div>
+            <div className="-mx-4 mt-5 sm:-mx-0">
+              {limitSelected ? (
+                <>
+                  <TableTramites
+                    handleSelectedLimit={handleSelectedLimit}
+                    data={data}
+                    handleSelectItem={handleSelectItem}
+                    paginate={paginate}
+                    siguientePage={siguientePage}
+                    anteriorPage={anteriorPage}
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="min-w-full divide-y md:h-[25rem]">
+                    <SelectOpcion
+                      opciones={opciones}
+                      opcionInput={opcionInput}
+                      setOpcionInput={setOpcionInput}
+                      handleSelectedLimit={handleSelectedLimit}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
           </div>
         </div>
       </div>

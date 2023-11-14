@@ -36,8 +36,16 @@ export const navigation = [
       current: false,
     },
     {
+      user: "Admin",
       name: "Proyecto",
       href: "/dashboard/proyecto",
+      icon: WindowIcon,
+      current: false,
+    },
+    {
+      user: "User",
+      name: "Proyecto",
+      href: "/dashboard/miproyecto",
       icon: WindowIcon,
       current: false,
     },

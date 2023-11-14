@@ -20,6 +20,7 @@ const ModalCrearProyecto = ({
   proyectoSelected,
 }) => {
 
+  const [filtroTramite, setFiltroTramite] = useState('');
   const { consultarTramites, consultarTodosTramites } = useTramite();
   const [tramites, SetTramites] = useState([]);
   useEffect(() => {
@@ -114,7 +115,7 @@ const ModalCrearProyecto = ({
                       htmlFor="fecha-fin"
                       className="block mb-2 text-sm font-medium text-gray-500"
                     >
-                      Fecha de Ingreso del Tramite:
+                      Fecha de ingreso del tramite:
                     </label>
                     <input
                       type="date"
@@ -125,9 +126,8 @@ const ModalCrearProyecto = ({
                       onChange={(e) => setFechaIngresoTramite(e.target.value)}
                     />
                   </div>
-                </div>
-                <div className="flex gap-3 w-full">
-                  <div className="w-full">
+
+                  <div className="w-1/2">
                     <label
                       htmlFor="estado"
                       className="block mb-2 text-sm font-medium text-gray-500"
@@ -151,6 +151,7 @@ const ModalCrearProyecto = ({
 
                   </div>
                 </div>
+                
                 {Object.keys(proyectoSelected).length > 0 ? (
                   <button className="hidden"></button>
                 ) : (
@@ -159,25 +160,40 @@ const ModalCrearProyecto = ({
                       htmlFor="tramites"
                       className="block mb-2 text-sm font-medium text-gray-500"
                     >
-                      Tramites
+                      Selecciona un tramite
                   </label>
+                  <div className="border border-gray-300">
+                  <input type="text"
+                   placeholder="Buscar tramite"
+                   value={filtroTramite}
+                   onChange={(e) => setFiltroTramite(e.target.value)}
+                   className="bg-slate-50 border border-white text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5"
+                   />
                   <select
                     name="tramites"
                     id="tramites"
-                    className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5"
+                    className="bg-slate-50 border border-white text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pr-10 p-2.5"                  
                     value={idt}
                     onChange={(e) => setIdt(e.target.value)}
                   >
-
-                    {tramites && tramites.map(tramite => (  <>
-                        {" "}
-                        <option value={tramite?._id}>
-                          {tramite?.tramites[24].valor}
+                    {tramites && 
+                    tramites.filter(
+                      (tramite) => 
+                      tramite.tramites[24].valor
+                      .toLowerCase()
+                      .includes(filtroTramite.toLowerCase())
+                    )
+                    .map((tramite) => (  
+                    <>
+                        
+                        <option key={tramite._id} value={tramite._id}>
+                          {tramite.tramites[24].valor}
                         </option>
                       </>)
                     )}
-                    <option value="">Selecciona los Tramites</option>
+                    
                   </select>
+                  </div>
                 </div>
                 )}
 
@@ -193,7 +209,7 @@ const ModalCrearProyecto = ({
                       type="text"
                       name="nombre"
                       id="nombre"
-                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block resize-none w-full h-32 p-2.5"
                       placeholder="Notas"
                       value={notas}
                       onChange={(e) => setNotas(e.target.value)}
@@ -201,6 +217,8 @@ const ModalCrearProyecto = ({
                   </div>
                 </div>
 
+
+                <div className="flex items-center justify-center" >
                 {Object.keys(proyectoSelected).length > 0 ? (
                   <input
                     type="submit"
@@ -214,6 +232,7 @@ const ModalCrearProyecto = ({
                     className="justify-center rounded-3xl hover:scale-95 bg-blue-400 px-10 py-3  text-sm font-semibold leading-6 duration-300 hover:duration-300 text-white shadow-sm hover:bg-blue-300 focus-visible:outline "
                   />
                 )}
+                </div>
 
 
               </form>
