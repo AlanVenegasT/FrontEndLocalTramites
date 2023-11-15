@@ -4,6 +4,7 @@ import { ChevronRightIcon, MapIcon } from "@heroicons/react/20/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import ListMiProyectos from "./ListMiProyectos";
 import ModalCrearMiProyecto from "./ModalCrearMiProyecto";
+import Pagination from "../Tramites/Pagination";
 import useMiProyecto from "../../hooks/useMiProyecto";
 import useProyecto from "../../hooks/useProyecto";
 
@@ -17,6 +18,8 @@ const MiProyectos = () => {
   const [proyectos, setProyectos] = useState([]);
   //form states
   const [idt, setIdt] = useState("");
+  const [totalProyectos, setTotalProyectos] = useState(0);
+  const [paginate, setPaginate] = useState(1);
   const [nombre, setNombre] = useState("");
   const [estado, setEstado] = useState("Pendiente");
   const [fechaIngresoTramite, setFechaIngresoTramite] = useState("");
@@ -27,7 +30,8 @@ const MiProyectos = () => {
   useEffect(() => {
     setReload(false);
     const mostrarMiProyectos = async () => {
-      const { data } = await obtenerMiProyectos();
+      const { data } = await obtenerMiProyectos(9, paginate);
+      setTotalProyectos(data.total);
       setProyectos(data.data);
     };
     mostrarMiProyectos();
@@ -104,6 +108,20 @@ const MiProyectos = () => {
     openModal();
   };
 
+  const siguientePage = () => {
+    setPaginate(paginate + 1);
+    setReload(true);
+  };
+
+  const anteriorPage = () => {
+    if (paginate === 0) {
+      setPaginate(1);
+    } else {
+      setPaginate(paginate - 1);
+    }
+    setReload(true);
+  };
+
   const { msg } = alerta;
   return (
     <>
@@ -147,7 +165,7 @@ const MiProyectos = () => {
               <div className="sm:flex sm:items-center sm:justify-between">
                 <div className="sm:flex-auto grow w-full">
                   <h1 className="text-base font-semibold leading-6 text-gray-900">
-                    Proyectos
+                    Proyectos: {totalProyectos}
                   </h1>
                   <p className="mt-2 text-md text-gray-700">
                     En este apartado puedes ver tus proyectos y acceder a sus
@@ -195,6 +213,11 @@ const MiProyectos = () => {
               </div>
             </div>
           </div>
+          <Pagination
+          paginate={paginate}
+          anteriorPage={anteriorPage}
+          siguientePage={siguientePage}
+          />
         </div>
       </div>
     </>
