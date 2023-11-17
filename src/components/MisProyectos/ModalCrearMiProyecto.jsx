@@ -182,7 +182,7 @@ const ModalCrearMiProyecto = ({
                   )
                   .map((tramite) => (  
                   <>
-                      
+                      <option >Selecciona una opción</option>
                       <option key={tramite._id} value={tramite._id}>
                         {tramite.tramites[24].valor}
                       </option>
