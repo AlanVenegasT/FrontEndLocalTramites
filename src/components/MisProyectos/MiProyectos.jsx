@@ -31,6 +31,10 @@ const MiProyectos = () => {
     setReload(false);
     const mostrarMiProyectos = async () => {
       const { data } = await obtenerMiProyectos(9, paginate);
+      if(data === undefined){
+        setPaginate(1);
+        setReload(true);
+      }
       setTotalProyectos(data.total);
       setProyectos(data.data);
     };
