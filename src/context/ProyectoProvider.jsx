@@ -111,6 +111,25 @@ const ProyectoProvider = ({ children }) => {
     }
   };  
 
+  const compartirProyecto = async (idUsuario, idProyecto) =>{
+    try {
+        const data = await axiosClient.post(
+          "/proyecto/compartir",
+          {
+            idUsuario,
+            idProyecto
+          },
+          { withCredentials: true}
+        );
+        return {msg: data.data.message, error:false};
+    } catch (error) {
+      console.log(error);
+      return { msg: "Error al Compartir el proyecto", error: true};
+    }
+  };
+ 
+  
+
   return (
     <ProyectoContext.Provider
       value={{
@@ -118,13 +137,16 @@ const ProyectoProvider = ({ children }) => {
         crearProyecto,
         editarProyecto,
         eliminarProyecto,
-        cargarArchivo
+        cargarArchivo,
+        compartirProyecto
+        
       }}
     >
       {children}
     </ProyectoContext.Provider>
   );
 };
+
 
 export { ProyectoProvider };
 

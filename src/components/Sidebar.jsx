@@ -200,7 +200,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   className={classNames(
                                     item.name === currentNavItem
                                       ? "bg-black/25 text-white"
-                                      : "text-white hover:text-slate-900 hover:bg-[#272727]",
+                                      : "text-white hover:text-slate-900 hover:bg-white",
                                     "group cursor-pointer h-[60px] flex items-center gap-x-3 pl-5 mb-1 relative rounded-full z-10"
                                   )}
                                   onClick={() => handleItemClick(item.name)}
@@ -281,9 +281,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           <li>
                             <a
                               onClick={(e) => handleCerrarSesion(e)}
-                              className="text-white hover:bg-black/25 hover:bg-slate-100 group cursor-pointer h-[50px] flex items-center gap-x-3 pl-5 mb-1 relative rounded-full z-10"
+                              className="text-white hover:text-slate-900 hover:bg-black/25 hover:bg-slate-100 group cursor-pointer h-[50px] flex items-center gap-x-3 pl-5 mb-1 relative rounded-full z-10"
                             >
-                              <KeyIcon className="text-slate-200 group-hover:text-white h-6 w-6 shrink-0" />
+                              <KeyIcon className="text-slate-200 hover:text-slate-900 group-hover:text-white h-6 w-6 shrink-0" />
                               Cerrar sesión
                             </a>
                           </li>

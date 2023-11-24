@@ -120,8 +120,8 @@ const ProyectoPage = () => {
     const mostrarProyectos = async () => {
       try {
         const { data } = await obtenerProyectos(id);
-        console.log("data",data)
-        console.log("id",id)
+        // console.log("data",data)
+        // console.log("id",id)
         const proyecto = data.data.filter((p) => p._id === id)[0];
         setProyecto(proyecto);
         setReload(true);
@@ -137,7 +137,6 @@ const ProyectoPage = () => {
   }, [id]);
 
   const { msg } = alerta;
-
   return (
     <>
       {msg && <Alerta alerta={alerta} />}

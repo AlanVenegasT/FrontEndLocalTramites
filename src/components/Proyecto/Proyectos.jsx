@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Alerta from "../Alerta";
 import { ChevronRightIcon, MapIcon } from "@heroicons/react/20/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -7,11 +6,18 @@ import ListProyectos from "./ListProyectos";
 import Pagination from "../Tramites/Pagination";
 import ModalCrearProyecto from "./ModalCrearProyecto";
 import useProyecto from "../../hooks/useProyecto";
+import useUsuario from "../../hooks/useUsuario";
+import { Menu, Transition } from "@headlessui/react";
+import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
+const estado = "Activo";
 
 const Proyectos = () => {
-  const { obtenerProyectos, eliminarProyecto, crearProyecto, editarProyecto } =
+  const { obtenerProyectos, eliminarProyecto, crearProyecto, editarProyecto, compartirProyecto } =
     useProyecto();
-    console.log(obtenerProyectos)
+
+  const { consultarUsuarios } = useUsuario();
+  // console.log(obtenerProyectos)
 
   const [alerta, setAlerta] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -21,18 +27,30 @@ const Proyectos = () => {
   const [totalProyectos, setTotalProyectos] = useState(0);
   const [paginate, setPaginate] = useState(1);
   const [nombre, setNombre] = useState("");
-  const [estado, setEstado] = useState("Pendiente");
+  //const [estado, setEstado] = useState("Pendiente");
   const [fechaIngresoTramite, setFechaIngresoTramite] = useState("");
   const [notas, setNotas] = useState("");
   const [reload, setReload] = useState(false);
-
   const [proyectoSelected, setProyectoSelected] = useState({});
+  
+  const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() =>{
+    setReload(false);
+    const mostrarUsuarios = async () => {
+      const { data } = await consultarUsuarios();
+      const response = data.data.data;
+      setUsuarios(response);
+    };
+    mostrarUsuarios();
+  }, [reload]);
+  
 
   useEffect(() => {
     setReload(false);
     const mostrarProyectos = async () => {
       const { data } = await obtenerProyectos(9, paginate);
-      if(data.data.length === 0){
+      if (data.data.length === 0) {
         setPaginate(1);
         setReload(true);
       }
@@ -91,7 +109,7 @@ const Proyectos = () => {
       });
       setIdt("");
       setNombre("");
-      setEstado("");
+      //setEstado("");
       setFechaIngresoTramite("");
       setNotas("");
       setReload(true);
@@ -107,6 +125,21 @@ const Proyectos = () => {
     });
     setReload(true);
   };
+
+  const handleCompartirProyecto = async (idUsuario, idProyecto) => {
+    setAlerta({});
+    console.log("idUsuario",idUsuario)
+    console.log("idProyecto",idProyecto)
+    const { msg, error } = await compartirProyecto(idUsuario, idProyecto);
+    setAlerta({
+      msg,
+      error,
+    });
+    setReload(true);
+  };
+
+  
+
 
   const hanldeSelectProyecto = (proyecto) => {
     setProyectoSelected(proyecto);
@@ -191,12 +224,12 @@ const Proyectos = () => {
                 handleSubmit={handleSubmit}
                 idtArray={idt}
                 nombre={nombre}
-                estado={estado}
+                //estado={estado}
                 fechaIngresoTramite={fechaIngresoTramite}
                 notas={notas}
                 setIdt={setIdt}
                 setNombre={setNombre}
-                setEstado={setEstado}
+                //setEstado={setEstado}
                 setFechaIngresoTramite={setFechaIngresoTramite}
                 setNotas={setNotas}
                 proyectoSelected={proyectoSelected}
@@ -207,22 +240,26 @@ const Proyectos = () => {
                   className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
                 >
                   {proyectos.map((proyecto) => (
-                    <ListProyectos
-                      key={proyecto._id}
-                      proyecto={proyecto}
-                      handleEliminarProyecto={handleEliminarProyecto}
-                      hanldeSelectProyecto={hanldeSelectProyecto}
-                    />
+                    
+                      <ListProyectos
+                        key={proyecto._id}
+                        usuarios={usuarios}
+                        proyecto={proyecto}
+                        handleEliminarProyecto={handleEliminarProyecto}
+                        hanldeSelectProyecto={hanldeSelectProyecto}
+                        handleCompartirProyecto={handleCompartirProyecto}
+                      />
+                      
                   ))}
                 </ul>
               </div>
             </div>
-            
+
           </div>
           <Pagination
-          paginate={paginate}
-          anteriorPage={anteriorPage}
-          siguientePage={siguientePage}
+            paginate={paginate}
+            anteriorPage={anteriorPage}
+            siguientePage={siguientePage}
           />
         </div>
       </div>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import useTramite from "../../hooks/useTramite"
-import { button } from "@material-tailwind/react";
 
 const ModalCrearProyecto = ({
   modalIsOpen,
@@ -9,12 +8,12 @@ const ModalCrearProyecto = ({
   handleSubmit,
   idt,
   nombre,
-  estado,
+  //estado,
   fechaIngresoTramite,
   notas,
   setIdt,
   setNombre,
-  setEstado,
+  //setEstado,
   setFechaIngresoTramite,
   setNotas,
   proyectoSelected,
@@ -32,14 +31,12 @@ const ModalCrearProyecto = ({
     if (proyectoSelected) {
       setIdt(proyectoSelected.idt);
       setNombre(proyectoSelected.nombre);
-      setEstado(proyectoSelected.estado)
+      //setEstado(proyectoSelected.estado)
       setFechaIngresoTramite(proyectoSelected.fechaIngresoTramite);
       setNotas(proyectoSelected.notas);
     }
     getTramites();
   }, [proyectoSelected]);
-
-  console.log(tramites)
 
   return (
     <Modal
@@ -110,7 +107,7 @@ const ModalCrearProyecto = ({
 
 
                 <div className="flex gap-3 w-full">
-                  <div className="w-1/2">
+                  <div className="w-full">
                     <label
                       htmlFor="fecha-fin"
                       className="block mb-2 text-sm font-medium text-gray-500"
@@ -127,29 +124,7 @@ const ModalCrearProyecto = ({
                     />
                   </div>
 
-                  <div className="w-1/2">
-                    <label
-                      htmlFor="estado"
-                      className="block mb-2 text-sm font-medium text-gray-500"
-                    >
-                      Estado:
-                    </label>
-
-                    <select
-                      name="estado"
-                      id="estado"
-                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                      value={estado}
-                      onChange={(e) => setEstado(e.target.value)}
-                    >
-                      <option value="Selecciona una opción">Selecciona una opción</option>
-                      <option value="Iniciado">Iniciado</option>
-                      <option value="En curso">En curso</option>
-                      <option value="Terminado">Terminado</option>
-                      {/* Agrega más opciones según tus necesidades */}
-                    </select>
-
-                  </div>
+                  
                 </div>
                 
                 {Object.keys(proyectoSelected).length > 0 ? (
@@ -176,6 +151,7 @@ const ModalCrearProyecto = ({
                     value={idt}
                     onChange={(e) => setIdt(e.target.value)}
                   >
+                    <option >Selecciona una opción</option>
                     {tramites && 
                     tramites.filter(
                       (tramite) => 
@@ -185,7 +161,6 @@ const ModalCrearProyecto = ({
                     )
                     .map((tramite) => (  
                     <>
-                        
                         <option key={tramite._id} value={tramite._id}>
                           {tramite.tramites[24].valor}
                         </option>

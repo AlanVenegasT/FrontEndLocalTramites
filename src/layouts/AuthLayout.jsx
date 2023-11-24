@@ -2,7 +2,8 @@ import { Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
   return (
-    <div className="bg-slate-950">
+    //bg-slate-950
+    <div className="bg-white"> 
       <Outlet />
     </div>
   );

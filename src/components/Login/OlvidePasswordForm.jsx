@@ -53,11 +53,13 @@ const OlvidePasswordForm = () => {
         />
         <div className=" relative mt-4 mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-5 shadow sm:rounded-3xl duration-500 hover:scale-105 sm:px-12">
+        <Link to="/">
         <img
               className="mx-auto h-14 w-auto hover:scale-110 duration-300"
               src="https://imgur.com/yvRmEvN.png"
               alt="Your Company"
             />
+            </Link>
                         <div className="border-t mt-5"></div>
 
               <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -101,7 +103,7 @@ const OlvidePasswordForm = () => {
 
               <div className="text-sm mt-5 leading-6">
                 <Link
-                  to="/"
+                  to="/login"
                   className="font-semibold text-slate-800 hover:text-[#3366CC]"
                 >
                   Volver al inicio

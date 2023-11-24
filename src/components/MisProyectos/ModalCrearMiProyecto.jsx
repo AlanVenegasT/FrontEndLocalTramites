@@ -173,6 +173,7 @@ const ModalCrearMiProyecto = ({
                   value={idt}
                   onChange={(e) => setIdt(e.target.value)}
                 >
+                  <option >Selecciona una opción</option>
                   {tramites && 
                   tramites.filter(
                     (tramite) => 
@@ -182,7 +183,6 @@ const ModalCrearMiProyecto = ({
                   )
                   .map((tramite) => (  
                   <>
-                      <option >Selecciona una opción</option>
                       <option key={tramite._id} value={tramite._id}>
                         {tramite.tramites[24].valor}
                       </option>
