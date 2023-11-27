@@ -4,22 +4,45 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
 const statuses = {
-  "Iniciado": "text-green-700 bg-green-50 ring-greenn-400",
-  "En curso": "text-yellow-600 bg-yellow-50 ring-yellow-500",
-  "Terminado": "text-red-700 bg-red-50 ring-red-600",
+  "Activo": "text-green-700 bg-green-50 ring-greenn-400",
+  "Requiere una Acción": "text-yellow-600 bg-yellow-50 ring-yellow-500",
+  "Atrasado": "text-red-700 bg-red-50 ring-red-600",
 };
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+let fechaActual = new Date();
+const anio = fechaActual.getFullYear();
+const mes = fechaActual.getMonth() + 1;
+const dia = fechaActual.getDate();
+fechaActual = new Date(anio + "/" + mes + "/" + dia);
+
 export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanldeSelectProyecto }){
+  const fechaTramite = new Date(proyecto.fechaIngresoTramite);
+
+  const diasRestantes = Math.floor((fechaTramite - fechaActual) / (1000 * 60 * 60 * 24));
+  let estado = proyecto.estado;
+  proyecto.requisitos.forEach(requisito => {
+    if (requisito.archivoRequisito.length <= 0) {
+      if (diasRestantes < 5) {
+        estado = "Requiere una Acción"
+        if (diasRestantes < 0) {
+          estado = "Atrasado";
+          return;
+        }
+        return;
+      }
+    }
+  })
+
   return(
     <>
     
     <li className="overflow-hidden rounded-md border">
-    <div className={`flex items-center gap-x-4 border-b ${statuses[proyecto.estado]} ${proyecto.estado !== 'Iniciado' ? statuses[proyecto.estado] : ''} p-6`}>
-        <div className={`text-sm font-medium leading-6 ${statuses[proyecto.estado]} ${proyecto.estado !== 'Iniciado' ? statuses[proyecto.estado] : ''}`}>
+    <div className={`flex items-center gap-x-4 border-b ${statuses[estado]} ${proyecto.estado !== 'Activo' ? statuses[estado] : ''} p-6`}>
+        <div className={`text-sm font-medium leading-6 ${statuses[estado]} ${proyecto.estado !== 'Activo' ? statuses[estado] : ''}`}>
   {proyecto.nombre}
 </div>
         <Menu as="div" className="relative ml-auto">
@@ -97,11 +120,11 @@ export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanl
           <dd className="flex items-start gap-x-2">
             <div
               className={classNames(
-                statuses[proyecto.estado],
+                statuses[estado],
                 "rounded-md bg-black/5 py-1 px-2 text-xs font-medium border ring-inset"
               )}
             >
-              {proyecto.estado}
+              {estado}
             </div>
           </dd>
         </div>

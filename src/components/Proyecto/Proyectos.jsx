@@ -7,9 +7,7 @@ import Pagination from "../Tramites/Pagination";
 import ModalCrearProyecto from "./ModalCrearProyecto";
 import useProyecto from "../../hooks/useProyecto";
 import useUsuario from "../../hooks/useUsuario";
-import { Menu, Transition } from "@headlessui/react";
-import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+
 const estado = "Activo";
 
 const Proyectos = () => {

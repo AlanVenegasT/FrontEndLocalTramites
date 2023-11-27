@@ -8,6 +8,8 @@ import Pagination from "../Tramites/Pagination";
 import useMiProyecto from "../../hooks/useMiProyecto";
 import useProyecto from "../../hooks/useProyecto";
 
+const estado = "Activo";
+
 const MiProyectos = () => {
   const { obtenerMiProyectos, editarMiProyecto, eliminarMiProyecto } = useMiProyecto();
 
@@ -21,7 +23,7 @@ const MiProyectos = () => {
   const [totalProyectos, setTotalProyectos] = useState(0);
   const [paginate, setPaginate] = useState(1);
   const [nombre, setNombre] = useState("");
-  const [estado, setEstado] = useState("Pendiente");
+  //const [estado, setEstado] = useState("Pendiente");
   const [fechaIngresoTramite, setFechaIngresoTramite] = useState("");
   const [notas, setNotas] = useState("");
   const [reload, setReload] = useState(false);
@@ -90,7 +92,7 @@ const MiProyectos = () => {
       });
       setIdt("");
       setNombre("");
-      setEstado("");
+      //setEstado("");
       setFechaIngresoTramite("");
       setNotas("");
       setReload(true);
@@ -190,12 +192,12 @@ const MiProyectos = () => {
                 handleSubmit={handleSubmit}
                 idtArray={idt}
                 nombre={nombre}
-                estado={estado}
+                //estado={estado}
                 fechaIngresoTramite={fechaIngresoTramite}
                 notas={notas}
                 setIdt={setIdt}
                 setNombre={setNombre}
-                setEstado={setEstado}
+                //setEstado={setEstado}
                 setFechaIngresoTramite={setFechaIngresoTramite}
                 setNotas={setNotas}
                 proyectoSelected={proyectoSelected}

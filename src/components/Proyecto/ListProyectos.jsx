@@ -3,8 +3,6 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import React, { useState, Fragment } from "react";
 
-
-
 const statuses = {
   // "Iniciado": "text-green-700 bg-green-50 ring-greenn-400",
   "Activo": "text-green-700 bg-green-50 ring-greenn-400",
@@ -23,12 +21,10 @@ const dia = fechaActual.getDate();
 fechaActual = new Date(anio + "/" + mes + "/" + dia);
 
 export default function ListProyectos({ proyecto, handleEliminarProyecto, hanldeSelectProyecto, handleCompartirProyecto, usuarios }) {
-
+  
   const fechaTramite = new Date(proyecto.fechaIngresoTramite);
-
   const diasRestantes = Math.floor((fechaTramite - fechaActual) / (1000 * 60 * 60 * 24));
   let estado = proyecto.estado;
-
   proyecto.requisitos.forEach(requisito => {
     if (requisito.archivoRequisito.length <= 0) {
       if (diasRestantes < 5) {
