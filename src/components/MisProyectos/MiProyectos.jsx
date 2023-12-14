@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import React, { useState } from 'react';
 import Alerta from "../Alerta"
 import { ChevronRightIcon, MapIcon } from "@heroicons/react/20/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -7,13 +8,14 @@ import ModalCrearMiProyecto from "./ModalCrearMiProyecto";
 import Pagination from "../Tramites/Pagination";
 import useMiProyecto from "../../hooks/useMiProyecto";
 import useProyecto from "../../hooks/useProyecto";
+import useUsuario from "../../hooks/useUsuario";
 
 const estado = "Activo";
 
 const MiProyectos = () => {
   const { obtenerMiProyectos, editarMiProyecto, eliminarMiProyecto } = useMiProyecto();
-
-  const { crearProyecto } = useProyecto();
+  const { crearProyecto, compartirProyecto } = useProyecto();
+  const { consultarUsuariosTrue } = useUsuario();
 
   const [alerta, setAlerta] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -28,6 +30,19 @@ const MiProyectos = () => {
   const [notas, setNotas] = useState("");
   const [reload, setReload] = useState(false);
   const [proyectoSelected, setProyectoSelected] = useState({});
+
+  const [usuariosTrue, setUsuariosTrue] = useState([]);
+
+
+  useEffect(() =>{
+    setReload(false);
+    const mostrarUsuariosTrue = async () => {
+      const { data } = await consultarUsuariosTrue();
+      const response = data.data.data;
+      setUsuariosTrue(response);
+    };
+    mostrarUsuariosTrue();
+  }, [reload]);
 
   useEffect(() => {
     setReload(false);
@@ -102,6 +117,18 @@ const MiProyectos = () => {
   const handleEliminarProyecto = async (id) => {
     setAlerta({});
     const { msg, error } = await eliminarMiProyecto(id);
+    setAlerta({
+      msg,
+      error,
+    });
+    setReload(true);
+  };
+
+  const handleCompartirProyecto = async (idUsuario, idProyecto) => {
+    setAlerta({});
+    console.log("idUsuario",idUsuario)
+    console.log("idProyecto",idProyecto)
+    const { msg, error } = await compartirProyecto(idUsuario, idProyecto);
     setAlerta({
       msg,
       error,
@@ -210,9 +237,11 @@ const MiProyectos = () => {
                   {proyectos.map((proyecto) => (
                     <ListMiProyectos
                       key={proyecto._id}
+                      usuariosTrue={usuariosTrue}
                       proyecto={proyecto}
                       handleEliminarProyecto={handleEliminarProyecto}
                       hanldeSelectProyecto={hanldeSelectProyecto}
+                      handleCompartirProyecto={handleCompartirProyecto}
                     />
                   ))}
                 </ul>

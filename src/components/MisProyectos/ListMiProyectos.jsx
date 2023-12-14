@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import React, { useState } from 'react';
 
 const statuses = {
   "Activo": "text-green-700 bg-green-50 ring-greenn-400",
@@ -19,9 +20,8 @@ const mes = fechaActual.getMonth() + 1;
 const dia = fechaActual.getDate();
 fechaActual = new Date(anio + "/" + mes + "/" + dia);
 
-export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanldeSelectProyecto }){
+export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanldeSelectProyecto, handleCompartirProyecto, usuariosTrue }){
   const fechaTramite = new Date(proyecto.fechaIngresoTramite);
-
   const diasRestantes = Math.floor((fechaTramite - fechaActual) / (1000 * 60 * 60 * 24));
   let estado = proyecto.estado;
   proyecto.requisitos.forEach(requisito => {
@@ -36,6 +36,30 @@ export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanl
       }
     }
   })
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [usuariosSeleccionados, setUsuariosSeleccionados] = useState([]);
+
+  const handleSeleccionUsuario = (usuarioId) => {
+    // Actualizar el estado de los usuarios seleccionados
+    if (usuariosSeleccionados.includes(usuarioId)) {
+      setUsuariosSeleccionados(usuariosSeleccionados.filter((id) => id !== usuarioId));
+    } else {
+      setUsuariosSeleccionados([...usuariosSeleccionados, usuarioId]);
+    }
+  };
+
+  const handleEnviarUsuarios = () => {
+    // Lógica para enviar usuarios seleccionados al hacer clic en el botón
+    handleCompartirProyecto(usuariosSeleccionados, proyecto._id);
+    console.log("usuariosSeleccionados", usuariosSeleccionados)
+    // Cerrar el modal
+    setModalVisible(false);
+
+    // Limpiar la selección de usuarios
+    setUsuariosSeleccionados([]);
+  };
+
 
   return(
     <>
@@ -98,6 +122,18 @@ export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanl
                   </Link>
                 )}
               </Menu.Item>
+              <Menu.Item onClick={() => setModalVisible(true)}>
+                  {({ active }) => (
+                    <Link
+                      className={classNames(
+                        active ? "bg-gray-50" : "",
+                        "block px-3 py-1 text-sm leading-6 text-gray-900"
+                      )}
+                    >
+                      Compartir
+                    </Link>
+                  )}
+                </Menu.Item>
             </Menu.Items>
           </Transition>
         </Menu>
@@ -129,9 +165,45 @@ export default function ListMiProyectos({ proyecto, handleEliminarProyecto, hanl
           </dd>
         </div>
       </dl>
+      {/* Modal para seleccionar usuarios */}
+      {modalVisible && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-md shadow-lg">
+              <h2 className="text-lg font-semibold mb-4 px-8">Seleccionar usuarios</h2>
+              {usuariosTrue.map((usuario) => (
+                <div key={usuario.uid} className="flex items-center gap-2 mb-2">
+                  <input
+                    type="checkbox"
+                    onChange={() => handleSeleccionUsuario(usuario.uid)}
+                    checked={usuariosSeleccionados.includes(usuario.uid)}
+                  />
+                  <span className="text-gray-700">{usuario.nombre}</span>
+                </div>
+              ))}
+              <div className="flex justify-between pt-6">
+              <button
+                onClick={handleEnviarUsuarios}
+                className="bg-[#E12E2E] text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300"
+              >
+                Compartir
+              </button>
+              <button
+                  onClick={() => {
+                    setModalVisible(false);
+                    // Limpiar la selección de usuarios si es necesario
+                    setUsuariosSeleccionados([]);
+                  }}
+                  className="bg-white border border-solid border-[#D4D8DD] text-black px-4 py-2 rounded-md hover:bg-[#F9FAFB] transition duration-300"
+                >
+                  Cancelar
+                </button>
+                </div>
+            </div>
+          </div>
+        )}
     </li>
     </>
-  )
+  );
 } 
 
 

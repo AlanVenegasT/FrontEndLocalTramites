@@ -14,7 +14,7 @@ const Proyectos = () => {
   const { obtenerProyectos, eliminarProyecto, crearProyecto, editarProyecto, compartirProyecto } =
     useProyecto();
 
-  const { consultarUsuarios } = useUsuario();
+  const { consultarUsuarios, consultarUsuariosTrue } = useUsuario();
   // console.log(obtenerProyectos)
 
   const [alerta, setAlerta] = useState({});
@@ -32,6 +32,7 @@ const Proyectos = () => {
   const [proyectoSelected, setProyectoSelected] = useState({});
   
   const [usuarios, setUsuarios] = useState([]);
+  const [usuariosTrue, setUsuariosTrue] = useState([]);
 
   useEffect(() =>{
     setReload(false);
@@ -42,7 +43,17 @@ const Proyectos = () => {
     };
     mostrarUsuarios();
   }, [reload]);
-  
+
+  useEffect(() =>{
+    setReload(false);
+    const mostrarUsuariosTrue = async () => {
+      const { data } = await consultarUsuariosTrue();
+      const response = data.data.data;
+      setUsuariosTrue(response);
+    };
+    mostrarUsuariosTrue();
+  }, [reload]);
+
 
   useEffect(() => {
     setReload(false);
@@ -135,9 +146,6 @@ const Proyectos = () => {
     });
     setReload(true);
   };
-
-  
-
 
   const hanldeSelectProyecto = (proyecto) => {
     setProyectoSelected(proyecto);
@@ -242,6 +250,7 @@ const Proyectos = () => {
                       <ListProyectos
                         key={proyecto._id}
                         usuarios={usuarios}
+                        usuariosTrue={usuariosTrue}
                         proyecto={proyecto}
                         handleEliminarProyecto={handleEliminarProyecto}
                         hanldeSelectProyecto={hanldeSelectProyecto}

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import React, { useState, Fragment } from "react";
 
 const statuses = {
-  // "Iniciado": "text-green-700 bg-green-50 ring-greenn-400",
   "Activo": "text-green-700 bg-green-50 ring-greenn-400",
   "Requiere una Acción": "text-yellow-600 bg-yellow-50 ring-yellow-500",
   "Atrasado": "text-red-700 bg-red-50 ring-red-600",
@@ -20,8 +19,7 @@ const mes = fechaActual.getMonth() + 1;
 const dia = fechaActual.getDate();
 fechaActual = new Date(anio + "/" + mes + "/" + dia);
 
-export default function ListProyectos({ proyecto, handleEliminarProyecto, hanldeSelectProyecto, handleCompartirProyecto, usuarios }) {
-  
+export default function ListProyectos({ proyecto, handleEliminarProyecto, hanldeSelectProyecto, handleCompartirProyecto, usuariosTrue }) {
   const fechaTramite = new Date(proyecto.fechaIngresoTramite);
   const diasRestantes = Math.floor((fechaTramite - fechaActual) / (1000 * 60 * 60 * 24));
   let estado = proyecto.estado;
@@ -171,7 +169,7 @@ export default function ListProyectos({ proyecto, handleEliminarProyecto, hanlde
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded-md shadow-lg">
               <h2 className="text-lg font-semibold mb-4 px-8">Seleccionar usuarios</h2>
-              {usuarios.map((usuario) => (
+              {usuariosTrue.map((usuario) => (
                 <div key={usuario.uid} className="flex items-center gap-2 mb-2">
                   <input
                     type="checkbox"

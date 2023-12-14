@@ -22,6 +22,21 @@ const UsuarioProvider = ({ children }) => {
         }
     };
 
+    const consultarUsuariosTrue = async (limit = 10, page = 1) =>{
+        try {
+            const data = await axiosClient(
+                `usuarios/usuariosTrue?limit=${limit}&page=${page}`,
+                {
+                    withCredentials: true,
+                }
+            );
+            return { data };
+        } catch (error){
+            console.log(error);
+            return { error };
+        }
+    };
+
     const eliminarUsuario = async (id) =>{
         try {
             const data = await axiosClient.delete(
@@ -71,6 +86,7 @@ const UsuarioProvider = ({ children }) => {
         <UsuarioContext.Provider
         value={{
             consultarUsuarios,
+            consultarUsuariosTrue,
             editarUsuario,
             eliminarUsuario
         }}
