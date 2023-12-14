@@ -19,6 +19,7 @@ const Usuarios = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [estado, setEstado] = useState("");
+  const [accesoIA, setAccesoIA] = useState("");
   const [rol, setRol] = useState("USER_ROLE");  
   const [reload, setReload] = useState(false);
 
@@ -33,6 +34,7 @@ const Usuarios = () => {
         setReload(true);
       }
       setTotalUsuarios(data.data.total);
+     
       const response = data.data.data;
       setUsuarios(response);
     };
@@ -61,6 +63,7 @@ const Usuarios = () => {
         nombre,
         correo,
         estado,
+        accesoIA,
         rol
       );
       setUsuarioSelected({});
@@ -122,10 +125,12 @@ const Usuarios = () => {
       nombre={nombre}
       correo={correo}
       estado={estado}
+      accesoIA={accesoIA}
       rol={rol}
       setNombre={setNombre}
       setCorreo={setCorreo}
       setEstado={setEstado}
+      setAccesoIA={setAccesoIA}
       setRol={setRol}
       usuarioSelected={usuarioSelected}
       />
@@ -141,6 +146,9 @@ const Usuarios = () => {
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Estado
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Servicio IA
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Role

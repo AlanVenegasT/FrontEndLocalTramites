@@ -8,23 +8,28 @@ const ModalCrearUsuario = ({
   nombre,
   correo,
   estado,
+  accesoIA,
   rol,
   setNombre,
   setCorreo,
   setEstado,
+  setAccesoIA,
   setRol,
   usuarioSelected,
 }) => {
   useEffect(() => {
+    
     if (usuarioSelected.uid) {
       setNombre(usuarioSelected.nombre || "");
       setCorreo(usuarioSelected.correo || "");
-      setEstado(usuarioSelected.estado || "");
+      setEstado(usuarioSelected.estado);
+      setAccesoIA(usuarioSelected.accesoChat.acceso);
       setRol(usuarioSelected.rol || "");
     } else {
       setNombre("");
       setCorreo("");
       setEstado("");
+      setAccesoIA("");
       setRol("");
     }
   }, [usuarioSelected]);
@@ -67,6 +72,19 @@ const ModalCrearUsuario = ({
           <select
             value={estado}
             onChange={(e) => setEstado(e.target.value)}
+            className="mt-1 p-2 border rounded-md w-full"
+          >
+            <option>Selecciona el Estado</option>
+            <option value="true">Activo</option>
+            <option value="false">Inactivo</option>
+          </select>
+        </label>
+
+        <label className="block mt-3">
+          Servicio IA:
+          <select
+            value={accesoIA}
+            onChange={(e) => setAccesoIA(e.target.value)}
             className="mt-1 p-2 border rounded-md w-full"
           >
             <option>Selecciona el Estado</option>

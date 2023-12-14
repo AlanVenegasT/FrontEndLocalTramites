@@ -79,6 +79,12 @@ const ListUsuarios = ({ usuario, handleEliminarUsuario, handleSelectUsuario }) =
                 </span>
             </td>
 
+            <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                <span className={`inline-flex items-center rounded-md ${usuario.accesoChat.acceso ? 'bg-green-50' : 'bg-red-50'} px-2 py-1 text-xs font-medium ${usuario.accesoChat.acceso ? 'text-green-700 ring-1 ring-inset ring-green-600/20' : 'text-red-700 ring-1 ring-inset ring-red-600/20'}`}>
+                    {usuario.accesoChat.acceso ? 'Active' : 'Inactive'}
+                </span>
+            </td>
+
             <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{usuario.rol}</td>
             
             <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

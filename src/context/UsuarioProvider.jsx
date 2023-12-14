@@ -62,6 +62,7 @@ const UsuarioProvider = ({ children }) => {
         nombre,
         correo,
         estado,
+        acceso,
         rol
     ) => {
         try {
@@ -71,16 +72,35 @@ const UsuarioProvider = ({ children }) => {
                     nombre,
                     correo,
                     estado,
+                    accesoChat:{acceso},
                     rol
                 },
                 { withCredentials: true }
             );
-            console.log(data);
+            console.log("DATOS:",data);
             return { msg: data.data.message, error: false };
         } catch(error){
             return { msg: "Error al editar el proyecto", error: true };
         }
     };
+
+    const actualizarIntentos = async () => {
+        id,
+        intentos
+        try {
+            const data = await axiosClient.put(
+                `/usuarios/${id}`,
+                {
+                    accesoChat:{intentos},
+                },
+                { withCredentials: true }
+            );
+            //console.log("DATOS:",data);
+            return { msg: data.data.message, error: false };
+        } catch(error){
+            return { msg: "Error al editar el proyecto", error: true };
+        }
+    }
 
     return(
         <UsuarioContext.Provider
@@ -88,7 +108,8 @@ const UsuarioProvider = ({ children }) => {
             consultarUsuarios,
             consultarUsuariosTrue,
             editarUsuario,
-            eliminarUsuario
+            eliminarUsuario,
+            actualizarIntentos
         }}
         >
             {children}

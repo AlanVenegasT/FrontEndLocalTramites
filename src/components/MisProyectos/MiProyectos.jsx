@@ -11,7 +11,7 @@ import useProyecto from "../../hooks/useProyecto";
 import useUsuario from "../../hooks/useUsuario";
 
 const estado = "Activo";
-
+let intentos = 0;
 const MiProyectos = () => {
   const { obtenerMiProyectos, editarMiProyecto, eliminarMiProyecto } = useMiProyecto();
   const { crearProyecto, compartirProyecto } = useProyecto();
@@ -49,11 +49,19 @@ const MiProyectos = () => {
     const mostrarMiProyectos = async () => {
       const { data } = await obtenerMiProyectos(9, paginate);
       if(data === undefined){
-        setPaginate(1);
-        setReload(true);
-      }
-      setTotalProyectos(data.total);
-      setProyectos(data.data);
+        if(intentos<1){
+          setPaginate(1);
+          setReload(true);
+        }
+        intentos ++;
+        
+      }else{
+        intentos = 0;
+        console.log(data);
+        setTotalProyectos(data.total);
+        setProyectos(data.data);
+    }
+      
     };
     mostrarMiProyectos();
   }, [reload]);
