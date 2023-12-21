@@ -18,7 +18,7 @@ const Chat = () => {
   const { auth} = useAuth();
   const [messages, setMessages] = useState([]);
   const [inputMsg, setInputMsg] = useState("");
-  const [categoriasCoincidentes, setCategoriasCoincidentes] = useState([]);
+  //const [categoriasCoincidentes, setCategoriasCoincidentes] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Estado para controlar la carga
   const [intentos, setIntentos] = useState();
   const [valid, setValid] = useState(false);
@@ -71,9 +71,9 @@ const Chat = () => {
         { withCredentials: true }
       );
 
-      const botResponse = response.data.data.respuesta.body;
-      const coincidentes =
-        response.data.data.recomendaciones.categoriasCoincidentes;
+      const botResponse = response.data.data.respuesta;
+      //const coincidentes =
+      //  response.data.data.recomendaciones.categoriasCoincidentes;
 
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -81,8 +81,8 @@ const Chat = () => {
         { text: botResponse, type: "bot" },
       ]);
 
-      setCategoriasCoincidentes(coincidentes);
-      console.log("Estas son las coincidencias:", coincidentes);
+      //setCategoriasCoincidentes(coincidentes);
+      //console.log("Estas son las coincidencias:", coincidentes);
 
       setInputMsg("");
 
