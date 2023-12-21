@@ -57,12 +57,28 @@ const UsuarioProvider = ({ children }) => {
         }
     };
 
+    const consultarUsuarioId = async (id) => {
+        try {
+            const data = await axiosClient(
+                `/usuarios/usuario/${id}`,
+                {
+                    withCredentials: true,
+                }
+            );
+            return { data };
+        } catch (error) {
+            console.log(error);
+            return { error };
+        }
+    }
+
     const editarUsuario = async (
         id,
         nombre,
         correo,
         estado,
         acceso,
+        intentos,
         rol
     ) => {
         try {
@@ -72,7 +88,7 @@ const UsuarioProvider = ({ children }) => {
                     nombre,
                     correo,
                     estado,
-                    accesoChat:{acceso},
+                    accesoChat:{acceso, intentos},
                     rol
                 },
                 { withCredentials: true }
@@ -84,14 +100,16 @@ const UsuarioProvider = ({ children }) => {
         }
     };
 
-    const actualizarIntentos = async () => {
+    const actualizarIntentos = async (
         id,
+        acceso,
         intentos
+    ) => {
         try {
             const data = await axiosClient.put(
                 `/usuarios/${id}`,
                 {
-                    accesoChat:{intentos},
+                    $set: {accesoChat:{acceso, intentos} },
                 },
                 { withCredentials: true }
             );
@@ -109,7 +127,8 @@ const UsuarioProvider = ({ children }) => {
             consultarUsuariosTrue,
             editarUsuario,
             eliminarUsuario,
-            actualizarIntentos
+            actualizarIntentos,
+            consultarUsuarioId
         }}
         >
             {children}

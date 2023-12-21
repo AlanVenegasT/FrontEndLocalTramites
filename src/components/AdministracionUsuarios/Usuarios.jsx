@@ -20,6 +20,7 @@ const Usuarios = () => {
   const [correo, setCorreo] = useState("");
   const [estado, setEstado] = useState("");
   const [accesoIA, setAccesoIA] = useState("");
+  const [intentosIA, setIntentosIA] = useState();
   const [rol, setRol] = useState("USER_ROLE");  
   const [reload, setReload] = useState(false);
 
@@ -64,6 +65,7 @@ const Usuarios = () => {
         correo,
         estado,
         accesoIA,
+        intentosIA,
         rol
       );
       setUsuarioSelected({});
@@ -126,11 +128,13 @@ const Usuarios = () => {
       correo={correo}
       estado={estado}
       accesoIA={accesoIA}
+      intentosIA={intentosIA}
       rol={rol}
       setNombre={setNombre}
       setCorreo={setCorreo}
       setEstado={setEstado}
       setAccesoIA={setAccesoIA}
+      setIntentosIA={setIntentosIA}
       setRol={setRol}
       usuarioSelected={usuarioSelected}
       />

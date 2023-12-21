@@ -9,11 +9,13 @@ const ModalCrearUsuario = ({
   correo,
   estado,
   accesoIA,
+  intentosIA,
   rol,
   setNombre,
   setCorreo,
   setEstado,
   setAccesoIA,
+  setIntentosIA,
   setRol,
   usuarioSelected,
 }) => {
@@ -24,12 +26,14 @@ const ModalCrearUsuario = ({
       setCorreo(usuarioSelected.correo || "");
       setEstado(usuarioSelected.estado);
       setAccesoIA(usuarioSelected.accesoChat.acceso);
+      setIntentosIA(usuarioSelected.accesoChat.intentos);
       setRol(usuarioSelected.rol || "");
     } else {
       setNombre("");
       setCorreo("");
       setEstado("");
       setAccesoIA("");
+      setIntentosIA("");
       setRol("");
     }
   }, [usuarioSelected]);
@@ -91,6 +95,16 @@ const ModalCrearUsuario = ({
             <option value="true">Activo</option>
             <option value="false">Inactivo</option>
           </select>
+        </label>
+
+        <label className="block mt-3">
+          Preguntas Restantes IA:
+          <input
+            type="number"
+            value={intentosIA}
+            onChange={(e) => setIntentosIA(e.target.value)}
+            className="mt-1 p-2   border rounded-md w-full"
+          />
         </label>
 
         <label className="block mt-3">

@@ -62,8 +62,15 @@ const navigation = [
     children: [{ name: "Buscar", href: "/dashboard" }],
   },
   {
+    user: "chatActivo",
     name: "Asistente Inteligente",
     href: "/dashboard/chat",
+    icon: ChatBubbleBottomCenterIcon,
+    current: false,
+  },
+  {
+    user: "chatInactivo",
+    name: "Sin Acceso al Asistente Inteligente",
     icon: ChatBubbleBottomCenterIcon,
     current: false,
   },
@@ -82,6 +89,7 @@ const navigation = [
     current: false,
   },
   {
+    user: "null",
     name: "Soporte",
     href: "/dashboard/soporte",
     icon: ChatBubbleOvalLeftEllipsisIcon,
@@ -99,12 +107,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   // Filtra el arreglo 'navigation' según el rol del usuario
   const filteredNavigation = navigation.filter((item) => {
+    const permisoChat = auth.accesoChat.acceso
     if (auth.rol !== "USER_ROLE") {
       // Mostrar elementos que son para todos los usuarios o para el rol de "Admin"
-      return item.user !== "User";
+      return (item.user === "Admin" || item.user === "null" || item.user === "chatActivo");
     } else {
       // Ocultar el elemento "Tramite" para usuarios de tipo "User"
-      return item.user !== "Admin";
+      if(permisoChat === true){
+        const vista = (item.user === "chatActivo" || item.user === "User" || item.user === "null")
+        return vista;
+      }else{
+        const vista = (item.user === "chatInactivo" || item.user === "User" || item.user === "null")
+        return vista;
+      }
+      
     }
   });
 
