@@ -31,14 +31,16 @@ const Logos = () => {
             width={158}
             height={48}
           />
-          </Link>
+          </Link >
+          <Link to="https://ppciem.mx/">
           <img
             className="col-span-1 max-h-12 w-full object-contain lg:col-span-1 duration-700 hover:scale-110"
-            src="https://pdftramites.nyc3.digitaloceanspaces.com/ImagenesIKTANStrategies/LOGO%20IKTAN%20TECHNOLOGIES.jpg"
+            src="https://ppciem.mx/images/logoWeb.svg"
             alt="Reform"
             width={158}
             height={48}
           />
+          </Link>
           <Link to="https://iktantraining.com/">
           <img
             className="col-span-2 max-h-12 w-full object-contain lg:col-span-1 duration-700 hover:scale-110"
