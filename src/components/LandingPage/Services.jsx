@@ -81,7 +81,7 @@ const Services = () => {
         <h3 className=' text-center text-3xl font-extrabold pb-5 pt-3 '>Lo que ofrecemos.</h3>
         <p className=' text-center pb-8 px-0 md:px-64 lg:px-64 xl:px-64'>Protegiendo lo que más importa: tu negocio y tranquilidad, nuestra prioridad</p>
       </div>
-      <div className=' mx-20'>
+      <div className=' xl:mx-52 lg:mx-20 '>
       <Slider {...settings}>
         {people.map((person) => (
           <div key={person.email} > 
